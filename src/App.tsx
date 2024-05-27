@@ -30,15 +30,11 @@ function App() {
     doc.deletePage(doc.getCurrentPageInfo().pageNumber);
 
     imageElements.forEach((image) => {
-      doc.addPage([image.naturalWidth, image.naturalHeight]);
-      doc.addImage(
-        image.src,
-        "JPEG",
-        0,
-        0,
-        image.naturalWidth,
-        image.naturalHeight
-      );
+      const width = image.naturalWidth;
+      const height = image.naturalHeight;
+
+      doc.addPage([width, height], width > height ? "l" : "p");
+      doc.addImage(image.src, "JPEG", 0, 0, width, height);
     });
 
     doc.save(outputFileName() + ".pdf");
